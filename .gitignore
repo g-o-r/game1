@@ -1,0 +1,14 @@
+*.user
+*.suo
+Debug/
+Release/
+obj/
+x86/
+*.orig
+*ReSharper*
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+TestResult.xml
+CommonAssemblyInfo.cs
