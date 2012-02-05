@@ -12,15 +12,22 @@
     <BareBonesBuildDocumentationDir>$(BareBonesBuildArtifactsDir)build.docs\</BareBonesBuildDocumentationDir>
     <LibDir>$(RootDir)lib\</LibDir>
     <LibTestDir>$(LibDir)test\</LibTestDir>
+    <LibBuildDir>$(LibDir)build\</LibBuildDir>
+    <TestDox>$(LibBuildDir)testdox\testdox.exe</TestDox>
     <NUnitExe>$(LibTestdir)nunit\nunit-console.exe</NUnitExe>
     <BareBonesProjTestAssembly>$(BareBonesFullBuildArtifactsDir)bare.bones.proj.test.dll</BareBonesProjTestAssembly>
     <BareBonesAppAcceptanceTestAssembly>$(BareBonesFullBuildArtifactsDir)bare.bones.app.acceptance.tests.dll</BareBonesAppAcceptanceTestAssembly>
   </PropertyGroup>
 
+  <Target Name="InitialisePaths">
+    <ConvertToAbsolutePath Paths="$(RootDir)" AbsolutePaths="RootDir" />
+  </Target>
+
   <Target Name="CommitStage">
+    <CallTarget Targets="InitialisePaths" />
     <CallTarget Targets="PrepareArtifactsDir" />
     <CallTarget Targets="BuildAll" />
-    <!--<CallTarget Targets="GenerateUnitTestDocumentation" />-->
+    <CallTarget Targets="GenerateUnitTestDocumentation" />
     <CallTarget Targets="RunCommitStageTests" />
     <CallTarget Targets="RunAcceptanceStageTests" />
   </Target>
