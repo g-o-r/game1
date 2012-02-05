@@ -9,7 +9,7 @@
     <BareBonesBuildArtifactsDir>$(BuildArtifactsDir)bare.bones.app\</BareBonesBuildArtifactsDir>
     <BareBonesFullBuildArtifactsDir>$(BareBonesBuildArtifactsDir)full\</BareBonesFullBuildArtifactsDir>
     <BareBonesDeployBuildArtifactsDir>$(BareBonesBuildArtifactsDir)deploy\</BareBonesDeployBuildArtifactsDir>
-    <BareBonesBuildDocumentationDir>$(BareBonesBuildArtifactsDir)build.docs</BareBonesBuildDocumentationDir>
+    <BareBonesBuildDocumentationDir>$(BareBonesBuildArtifactsDir)build.docs\</BareBonesBuildDocumentationDir>
     <LibDir>$(RootDir)lib\</LibDir>
     <LibTestDir>$(LibDir)test\</LibTestDir>
     <NUnitExe>$(LibTestdir)nunit\nunit-console.exe</NUnitExe>
