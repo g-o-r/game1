@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\..\lib\test\nunit\framework\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,10 +41,43 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>..\..\..\..\..\lib\test\spec.flow\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="White.Core">
+      <HintPath>..\..\..\..\..\lib\test\white\White.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Features\HelloWorld.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelloWorld.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StepDefinitions\BareBonesApplicationRunner.cs" />
+    <Compile Include="StepDefinitions\BareBonesBaseStepDefinitions.cs" />
+    <Compile Include="StepDefinitions\BareBonesMainWindow.cs" />
+    <Compile Include="StepDefinitions\BareBonesStepDefinitions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Features\HelloWorld.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>HelloWorld.feature.cs</LastGenOutput>
+    </None>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\production\bare.bones.main\bare.bones.main.csproj">
+      <Project>{856C815E-BA8E-4934-A8C8-8EAB60B62666}</Project>
+      <Name>bare.bones.main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\production\bare.bones.proj\bare.bones.proj.csproj">
+      <Project>{EB553A02-5E38-414C-9D16-2801BDAA3383}</Project>
+      <Name>bare.bones.proj</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
