@@ -20,7 +20,7 @@
   <Target Name="CommitStage">
     <CallTarget Targets="PrepareArtifactsDir" />
     <CallTarget Targets="BuildAll" />
-    <CallTarget Targets="GenerateUnitTestDocumentation" />
+    <!--<CallTarget Targets="GenerateUnitTestDocumentation" />-->
     <CallTarget Targets="RunCommitStageTests" />
     <CallTarget Targets="RunAcceptanceStageTests" />
   </Target>
@@ -30,7 +30,7 @@
   </Target>
 
   <Target Name="GenerateUnitTestDocumentation">
-    <Exec Command="$(TestDox) /Path:$(BareBonesProjTestAssembly) /Out:$(BuildDocumentationDir)" />
+    <Exec Command="$(TestDox) /Path:$(BareBonesProjTestAssembly) /Out:$(BareBonesBuildDocumentationDir)" />
   </Target>
 
   <Target Name="RunCommitStageTests">

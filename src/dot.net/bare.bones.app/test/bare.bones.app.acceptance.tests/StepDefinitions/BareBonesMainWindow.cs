@@ -21,9 +21,9 @@ namespace bare.bones.app.acceptance.tests.StepDefinitions
             get
             {
                 return
-                    _bareBonesApplication.GetWindow(SearchCriteria.ByAutomationId("BareBonesMainWindow"),
+                    _bareBonesApplication.GetWindow(SearchCriteria.ByText("Bare Bones"),
                                                     InitializeOption.WithCache).Get<Label>(
-                                                        SearchCriteria.ByAutomationId("Messagelabel")).Text;
+                                                        SearchCriteria.ByAutomationId("MessageLabel")).Text;
             }
         }
     }
