@@ -23,7 +23,7 @@
     <ConvertToAbsolutePath Paths="$(RootDir)" AbsolutePaths="RootDir" />
   </Target>
 
-  <Target Name="CommitStage">
+  <Target Name="AllStages">
     <CallTarget Targets="InitialisePaths" />
     <CallTarget Targets="PrepareArtifactsDir" />
     <CallTarget Targets="BuildAll" />

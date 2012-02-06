@@ -12,3 +12,4 @@ x86/
 *.REMOTE.*
 TestResult.xml
 CommonAssemblyInfo.cs
+build.artifacts/
