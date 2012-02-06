@@ -27,7 +27,7 @@
     <CallTarget Targets="InitialisePaths" />
     <CallTarget Targets="PrepareArtifactsDir" />
     <CallTarget Targets="BuildAll" />
-    <CallTarget Targets="GenerateUnitTestDocumentation" />
+    <!--<CallTarget Targets="GenerateUnitTestDocumentation" />-->
     <CallTarget Targets="RunCommitStageTests" />
     <CallTarget Targets="RunAcceptanceStageTests" />
   </Target>
