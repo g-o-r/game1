@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+  <Product Name='Bare Bones' Id='8097f4ee-28c5-4474-ac7b-9ce86eb8a5d6' UpgradeCode='bc24b174-bc8b-491c-b857-414eb956e4f4'
+    Language='1033' Codepage='1252' Version='1.0.0' Manufacturer='SomeManufacturer'>
+
+    <Package Id='*' Keywords='Installer' Description="Bare Bones 1.0 Installer"
+      Comments='Bare Bones is a registered trademark of SomeManufacturer.' Manufacturer='SomeManufacturer.'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    
+    <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+    <Property Id='DiskPrompt' Value="Acme's Foobar 1.0 Installation [1]" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='SomeManufacturer' Name='SomeManufacturer'>
+          <Directory Id='INSTALLDIR' Name='Bare Bones 1.0'>
+            <Component Id='MainExecutable' Guid='3f80949b-bfad-4793-8795-73625c6d313d'>
+              <File Id='BareBonesEXE' Name='bare.bones.main.exe' DiskId='1' Source='..\full\bare.bones.main.exe' KeyPath='yes'>
+                <Shortcut Id="startmenuBareBones10" Directory="ProgramMenuDir" Name="Foobar 1.0"
+  WorkingDirectory='INSTALLDIR' Icon="bare.bones.main.exe" IconIndex="0" Advertise="yes" />
+                <Shortcut Id="desktopBareBones10" Directory="DesktopFolder" Name="Foobar 1.0"
+                  WorkingDirectory='INSTALLDIR' Icon="bare.bones.main.exe" IconIndex="0" Advertise="yes" />
+              </File>
+            </Component>
+            <Component Id='BareBonesDll' Guid='7c924f9a-0e48-4eab-91db-b05f7191800a'>
+              <File Id='BareBonesDll' Name='bare.bones.proj.dll' DiskId='1' Source='..\full\bare.bones.proj.dll' KeyPath='yes' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="BareBones 1.0">
+          <Component Id="ProgramMenuDir" Guid="5b90db64-6ec1-4b4b-9606-cc78e270d7ee">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+    <Feature Id='Complete' Level='1'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='BareBonesDll' />
+      <ComponentRef Id='ProgramMenuDir' />
+    </Feature>
+    <Icon Id="bare.bones.main.exe" SourceFile="bare.bones.main.exe" />
+  </Product>
+</Wix>

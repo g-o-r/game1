@@ -14,6 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2C869DB3
 		bare.bones.app.build.xml = bare.bones.app.build.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "install", "install", "{046ADBD0-07AD-4702-B314-383D9805F749}"
+	ProjectSection(SolutionItems) = preProject
+		bare.bones.install.wxs = bare.bones.install.wxs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

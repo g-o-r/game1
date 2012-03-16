@@ -18,6 +18,13 @@
     <BareBonesProjTestAssembly>$(BareBonesFullBuildArtifactsDir)bare.bones.proj.test.dll</BareBonesProjTestAssembly>
     <BareBonesAppAcceptanceTestAssembly>$(BareBonesFullBuildArtifactsDir)bare.bones.app.acceptance.tests.dll</BareBonesAppAcceptanceTestAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+    <WixProject>$(SolutionDir)bare.bones.install.wxs</WixProject>
+    <WixObjFile>$(BareBonesFullBuildArtifactsDir)bare.bones.wixobj</WixObjFile>
+    <WixToolPath>$(RootDir)lib\build\WiX\</WixToolPath>
+    <CandleExe>$(WixToolPath)candle.exe</CandleExe>
+    <LightExe>$(WixToolPath)light.exe</LightExe>
+  </PropertyGroup>
 
   <Target Name="InitialisePaths">
     <ConvertToAbsolutePath Paths="$(RootDir)" AbsolutePaths="RootDir" />
@@ -29,6 +36,7 @@
     <CallTarget Targets="BuildAll" />
     <!--<CallTarget Targets="GenerateUnitTestDocumentation" />-->
     <CallTarget Targets="RunCommitStageTests" />
+    <CallTarget Targets="BuildInstaller" />
     <CallTarget Targets="RunAcceptanceStageTests" />
   </Target>
 
@@ -65,6 +73,11 @@
     <MakeDir Condition="!Exists('$(BareBonesFullBuildArtifactsDir)')" Directories="$(BareBonesFullBuildArtifactsDir)" />
     <MakeDir Condition="!Exists('$(BareBonesDeployBuildArtifactsDir)')" Directories="$(BareBonesDeployBuildArtifactsDir)" />
     <MakeDir Condition="!Exists('$(BareBonesBuildDocumentationDir)')" Directories="$(BareBonesBuildDocumentationDir)" />
+  </Target>
+
+  <Target Name="BuildInstaller">
+    <Exec Command="$(CandleExe) $(WixProject) -o $(WixObjFile)" />
+    <Exec Command="$(LightExe) -b .\ -o $(BareBonesDeployBuildArtifactsDir)blah $(WixObjFile)"/>
   </Target>
   
 </Project>
