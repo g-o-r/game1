@@ -77,7 +77,7 @@
 
   <Target Name="BuildInstaller">
     <Exec Command="$(CandleExe) $(WixProject) -o $(WixObjFile) " />
-    <Exec Command="$(LightExe) -b .\ -o $(BareBonesDeployBuildArtifactsDir)bare.bones -ext WixUIExtension $(WixObjFile)"/>
+    <Exec Command="$(LightExe) -b .\ -o $(BareBonesDeployBuildArtifactsDir)bare.bones.msi -ext WixUIExtension $(WixObjFile)"/>
   </Target>
   
 </Project>
