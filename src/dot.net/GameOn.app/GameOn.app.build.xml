@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <GameOnSolutionDir>$(MSBuildProjectDirectory)\</GameOnSolutionDir>
+    <GameOnSolution>$(GameOnSolutionDir)GameOn.app.sln</GameOnSolution>
+    <RootDir>$(MSBuildProjectDirectory)\..\..\..\</RootDir>
+    <BuildArtifactsDir>$(RootDir)build.artifacts\</BuildArtifactsDir>
+    <GameOnBuildArtifactsDir>$(BuildArtifactsDir)GameOn.app\</GameOnBuildArtifactsDir>
+    <GameOnFullBuildArtifactsDir>$(GameOnBuildArtifactsDir)full\</GameOnFullBuildArtifactsDir>
+    <GameOnDeployBuildArtifactsDir>$(GameOnBuildArtifactsDir)deploy\</GameOnDeployBuildArtifactsDir>
+    <GameOnBuildDocumentationDir>$(GameOnBuildArtifactsDir)build.docs\</GameOnBuildDocumentationDir>
+    <LibDir>$(RootDir)lib\</LibDir>
+    <LibTestDir>$(LibDir)test\</LibTestDir>
+    <LibBuildDir>$(LibDir)build\</LibBuildDir>
+    <TestDox>$(LibBuildDir)testdox\testdox.exe</TestDox>
+    <NUnitExe>$(LibTestdir)nunit\nunit-console.exe</NUnitExe>
+    <GameOnProjTestAssembly>$(GameOnFullBuildArtifactsDir)GameOn.proj.test.dll</GameOnProjTestAssembly>
+    <GameOnAppAcceptanceTestAssembly>$(GameOnFullBuildArtifactsDir)GameOn.app.acceptance.tests.dll</GameOnAppAcceptanceTestAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <WixProject>$(SolutionDir)GameOn.install.wxs</WixProject>
+    <WixObjFile>$(GameOnFullBuildArtifactsDir)GameOn.wixobj</WixObjFile>
+    <WixToolPath>$(RootDir)lib\build\WiX\</WixToolPath>
+    <CandleExe>$(WixToolPath)candle.exe</CandleExe>
+    <LightExe>$(WixToolPath)light.exe</LightExe>
+  </PropertyGroup>
+
+  <Target Name="InitialisePaths">
+    <ConvertToAbsolutePath Paths="$(RootDir)" AbsolutePaths="RootDir" />
+  </Target>
+
+  <Target Name="AllStages">
+    <CallTarget Targets="InitialisePaths" />
+    <CallTarget Targets="PrepareArtifactsDir" />
+    <CallTarget Targets="BuildAll" />
+    <!--<CallTarget Targets="GenerateUnitTestDocumentation" />-->
+    <CallTarget Targets="RunCommitStageTests" />
+    <CallTarget Targets="BuildInstaller" />
+    <CallTarget Targets="RunAcceptanceStageTests" />
+  </Target>
+
+  <Target Name="BuildAll">
+    <MSBuild Projects="$(GameOnSolution)" Properties="OutputPath=$(GameOnFullBuildArtifactsDir)" />
+  </Target>
+
+  <Target Name="GenerateUnitTestDocumentation">
+    <Exec Command="$(TestDox) /Path:$(GameOnProjTestAssembly) /Out:$(GameOnBuildDocumentationDir)" />
+  </Target>
+
+  <Target Name="RunCommitStageTests">
+    <Exec Command="$(NUnitExe) $(GameOnProjTestAssembly) /noshadow /include:commit.stage" />
+  </Target>
+
+  <Target Name="RunAcceptanceStageTests">
+    <Exec Command="$(NUnitExe) $(GameOnAppAcceptanceTestAssembly) /noshadow /include:acceptance.stage" />
+  </Target>
+
+  <Target Name="PrepareArtifactsDir">
+    <ItemGroup>
+      <BuildArtifactsDirFiles Include="$(GameOnFullBuildArtifactsDir)*" />
+      <BuildArtifactsDirFiles Include="$(GameOnDeployBuildArtifactsDir)*" />
+      <BuildArtifactsDirFiles Include="$(GameOnBuildDocumentationDir)*" />
+    </ItemGroup>
+    <Delete Files="@(BuildArtifactsDirFiles)" />
+    <RemoveDir Condition="Exists('$(BuildArtifactsDir)')" Directories="$(BuildArtifactsDir)" />
+    <RemoveDir Condition="Exists('$(GameOnBuildArtifactsDir)')" Directories="$(GameOnBuildArtifactsDir)" />
+    <RemoveDir Condition="Exists('$(GameOnFullBuildArtifactsDir)')" Directories="$(GameOnFullBuildArtifactsDir)" />
+    <RemoveDir Condition="Exists('$(GameOnDeployBuildArtifactsDir)')" Directories="$(GameOnDeployBuildArtifactsDir)" />
+    <RemoveDir Condition="Exists('$(GameOnBuildDocumentationDir)')" Directories="$(GameOnBuildDocumentationDir)" />
+    <MakeDir Condition="!Exists('$(BuildArtifactsDir)')" Directories="$(BuildArtifactsDir)" />
+    <MakeDir Condition="!Exists('$(GameOnBuildArtifactsDir)')" Directories="$(GameOnBuildArtifactsDir)" />
+    <MakeDir Condition="!Exists('$(GameOnFullBuildArtifactsDir)')" Directories="$(GameOnFullBuildArtifactsDir)" />
+    <MakeDir Condition="!Exists('$(GameOnDeployBuildArtifactsDir)')" Directories="$(GameOnDeployBuildArtifactsDir)" />
+    <MakeDir Condition="!Exists('$(GameOnBuildDocumentationDir)')" Directories="$(GameOnBuildDocumentationDir)" />
+  </Target>
+
+  <Target Name="BuildInstaller">
+    <Exec Command="$(CandleExe) $(WixProject) -o $(WixObjFile) " />
+    <Exec Command="$(LightExe) -b .\ -o $(GameOnDeployBuildArtifactsDir)GameOn.msi -ext WixUIExtension $(WixObjFile)"/>
+  </Target>
+  
+</Project>

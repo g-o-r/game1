@@ -1,0 +1,1 @@
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe /Target:AllStages ..\src\dot.net\GameOn.app\GameOn.app.build.xml

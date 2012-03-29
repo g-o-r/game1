@@ -1,1 +1,0 @@
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe /Target:AllStages ..\src\dot.net\bare.bones.app\bare.bones.app.build.xml
