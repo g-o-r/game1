@@ -2,6 +2,8 @@ using System.Windows.Forms;
 
 namespace GameOn.main
 {
+    public delegate void RenderTurnDelegate();
+
     public partial class GameOnMainWindow : Form, IRenderer, IInputNotifier
     {
         public GameOnMainWindow()
@@ -14,8 +16,14 @@ namespace GameOn.main
             game.Start();
         }
 
-        internal NewTurnStartedEventHandler RenderTurn()
+        internal void RenderTurn()
         {
+            if (InvokeRequired)
+            {
+                Invoke(new RenderTurnDelegate(RenderTurn));
+
+                return;
+            }
             this.Text = (int.Parse(this.Text) + 1).ToString();
 
         }

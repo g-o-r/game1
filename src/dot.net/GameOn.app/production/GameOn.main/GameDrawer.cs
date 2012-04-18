@@ -14,7 +14,14 @@ namespace GameOn.main
         {
             this.gameOnMainWindow = gameOnMainWindow;
             this.game = game;
-            game.NewTurnStarted += gameOnMainWindow.RenderTurn();
+           // game.NewTurnStarted += gameOnMainWindow.RenderTurn();
+            game.NewTurnStarted += new NewTurnStartedEventHandler(game_NewTurnStarted);
         }
+
+        void game_NewTurnStarted(object sender, EventArgs e)
+        {
+            gameOnMainWindow.RenderTurn();
+        }
+
     }
 }
